@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <div class="collapse-btn" @click="collapseChange">
+    <div class="collapse-btn" @click="changeCollapse(!collapse)">
       <i v-if="!collapse" class="el-icon-s-fold"></i>
       <i v-else class="el-icon-s-unfold"></i>
     </div>
@@ -11,21 +11,27 @@
 </template>
 
 <script>
+import { mapState, mapActions, mapMutations } from 'vuex'
 export default {
     name: "Header",
     data(){
         return{
-            collapse: true
+            //collapse: false
         }
     },
     methods:{
         //侧边栏折叠
-        collapseChange(){
-            this.collapse = !this.collapse;
-            //与父组件通信 this.$emit('collapse', this.collapse);
-            this.$store.dispatch('setCollapse',this.collapse);
-            console.log(this.$store.getters.getCollapse)
-        }
+        ...mapActions([
+                'changeCollapse'
+        ]),
+        ...mapMutations([
+                'setCollapse'
+        ])
+    },
+    computed:{
+      ...mapState([
+              'collapse'
+      ])
     }
 
 }

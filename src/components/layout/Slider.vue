@@ -1,9 +1,9 @@
 <template>
-    <div class="sidebar">
+    <div :class="getCollapse?'sidebar':'sidebar collapse'">
         <el-menu class="sidebar-el-menu"
                  unique-opened
                  router
-                 :collapse="collapse"
+                 :collapse="getCollapse"
                  background-color="#324157"
                  text-color="#bfcbd9"
                  active-text-color="#20a0ff">
@@ -54,6 +54,7 @@
 
 <script>
 import sliderPath from '@/router/sliderPath'
+import { mapGetters } from 'vuex'
 export default {
     name: "Slider",
     data() {
@@ -62,31 +63,35 @@ export default {
         }
     },
     computed:{
-        collapse(){
-            return this.$store.getters.getCollapse;
-        }
+       ...mapGetters([
+         "getCollapse"
+       ])
     },
-    created() {
-        console.log(this.collapse)
-    }
+
 }
 </script>
 
 <style scoped>
     .sidebar {
-        display: block;
-        position: absolute;
-        left: 0;
-        top: 70px;
-        bottom: 0;
         overflow-y: scroll;
+        width:80px;
+        height: 100%;
+    }
+    .collapse {
+        width: 200px;
     }
     .sidebar::-webkit-scrollbar {
         width: 0;
     }
-    .sidebar-el-menu:not(.el-menu--collapse) {
-        width: 250px;
-    }
+    /*.sidebar-el-menu:not(.el-menu--collapse) {*/
+    /*    width: 200px;*/
+    /*}*/
     .sidebar > ul {
         height: 100%;
-    }</style>
+    }
+</style>
+<style>
+    /*.sidebar-el-menu:not(.el-menu--collapse) {*/
+    /*    width: 200px;*/
+    /*}*/
+</style>
